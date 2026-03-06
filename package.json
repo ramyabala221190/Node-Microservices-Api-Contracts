@@ -1,0 +1,19 @@
+{
+  "name": "@ramyabala221190/api-contracts",
+  "version": "1.0.0",
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/"
+  },
+  "description": "Open API descriptions and TS interfaces",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "files": ["dist", "dist/openapi"],
+  "scripts": {
+    "build":"tsc && cp -r src/openapi -r dist/openapi"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "mongoose": "^9.2.4"
+  }
+}

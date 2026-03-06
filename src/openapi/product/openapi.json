@@ -1,0 +1,534 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "A minimal OpenAPI Description for ProductMicroservice",
+    "version": "0.0.1"
+  },
+  "paths": {
+    "/myproduct": {
+      "get": {
+        "summary": "This is a welcome API",
+        "tags": ["Welcome Message"],
+        "description": "This API describes the port and the gateway details",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "string"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/myproduct/products": {
+      "get": {
+        "summary": "This API fetches all products",
+        "description": "Retrieves an array of products",
+        "tags": ["Products"],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": { "type": "string" },
+                    "products": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Product"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create a new product",
+        "description": "This API is a admin feature to create new product",
+        "tags":["New Product Creation"],
+        "requestBody": {
+          "description": "Request body to create a new product",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/requestBodies/Product"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": { "type": "string" },
+                    "product": {
+                      "$ref": "#/components/schemas/Product"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/myproduct/product/{productId}": {
+      "put": {
+        "summary": "This API updates a product",
+        "description": "Product Updation",
+        "tags": ["Product Updation"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "productId",
+            "schema": {
+              "type": "number"
+            },
+            "required": true,
+            "description": "Id of the product"
+          }
+        ],
+        "requestBody": {
+          "description": "Request body to update product",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/requestBodies/Product"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": "string",
+                    "product": {
+                      "$ref": "#/components/schemas/Product"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      },
+      "delete": {
+        "summary": "This API deletes product",
+        "description": "Product Deletion",
+        "tags": ["Delete Product"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "productId",
+            "schema": {
+              "type": "number"
+            },
+            "required": true,
+            "description": "Id of the product"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": "string"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/myproduct/product/{productId}/review": {
+      "post": {
+        "summary": "This API adds a review to the product",
+        "description": "Product Review Addition",
+        "tags": ["Product Review Addition"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "productId",
+            "schema": {
+              "type": "number"
+            },
+            "required": true,
+            "description": "ID of the product,whose review has to be added"
+          }
+        ],
+        "requestBody": {
+          "description": "Request body to add review",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/requestBodies/Review"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": "string"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/myproduct/product/{productId}/review/{reviewId}": {
+      "put": {
+         "summary": "This API updates a review of the product",
+        "description": "Product Review Updation",
+        "tags": ["Product Review Updation"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "productId",
+            "schema": {
+              "type": "number"
+            },
+            "required": true,
+            "description": "ID of the product,whose review has to be updated"
+          },
+           {
+            "in": "path",
+            "name": "reviewId",
+            "schema": {
+              "type": "number"
+            },
+            "required": true,
+            "description": "reviewId of the review to be updated"
+          }
+        ],
+        "requestBody": {
+          "description": "Request body to update review",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/requestBodies/Review"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": "string"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/myproduct/product/discount": {
+      "put": {
+         "summary": "This API updates discount percentage of multiple product categories",
+        "description": "Product Category Discount Update",
+        "tags": ["Product Category Discount Update"],
+        "requestBody": {
+          "description": "Request body to update discount of categories",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                 "type":"object",
+                 "properties":{
+                    "discountPercentage":{
+                      "type":"number"
+                    },
+                    "categories":{
+                      "type":"array",
+                      "items":{
+                        "type":"string"
+                      }
+                    }
+
+                 }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": "string"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    },
+    "/myproduct/product/stock": {
+      "put": {
+         "summary": "This API updates stock of a product",
+        "description": "Product Stock Updation",
+        "tags": ["Product Stock Updation"],
+        "requestBody": {
+          "description": "Request body to update stock of products",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                 "type":"object",
+                 "properties":{
+                    "productList":{
+                      "type":"array",
+                      "items":{
+                        "$ref":"#/components/requestBodies/StockUpdate"
+                      }
+                    }
+
+                 }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": "string"
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Product": {
+        "type": "object",
+        "properties": {
+          "_id": { "type": "string" },
+          "id": { "type": "number" },
+          "title": { "type": "string" },
+          "description": { "type": "string" },
+          "category": { "type": "string" },
+          "price": { "type": "integer" },
+          "discountPercentage": { "type": "integer" },
+          "rating": { "type": "integer" },
+          "stock": { "type": "number" },
+          "tags": { "type": "array", "items": { "type": "string" } },
+          "brand": { "type": "string" },
+          "sku": { "type": "string" },
+          "weight": { "type": "integer" },
+          "dimensions": {
+            "type": "object",
+            "properties": {
+              "width": { "type": "integer" },
+              "height": { "type": "integer" },
+              "depth": { "type": "integer" }
+            }
+          },
+          "warrantyInformation": { "type": "string" },
+          "shippingInformation": { "type": "string" },
+          "availabilityStatus": { "type": "string" },
+          "reviews": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Review"
+            }
+          },
+          "returnPolicy": { "type": "string" },
+          "minimumOrderQuantity": { "type": "number" },
+          "meta": {
+            "type": "object",
+            "properties": {
+              "createdAt": { "type": "string" },
+              "updatedAt": { "type": "string" },
+              "barcode": { "type": "string" },
+              "qrCode": { "type": "string" }
+            }
+          },
+          "images": { "type": "array", "items": { "type": "string" } },
+          "thumbnail": { "type": "string" },
+          "createdAt": { "type": "string" },
+          "updatedAt": { "type": "string" }
+        }
+      },
+      "Review": {
+        "type": "object",
+        "properties": {
+          "_id": { "type": "string" },
+          "rating": { "type": "number" },
+          "comment": { "type": "string" },
+          "date": { "type": "string" },
+          "reviewerName": { "type": "string" },
+          "reviewerEmail": { "type": "string" }
+        }
+      }
+    },
+    "requestBodies": {
+      "Product": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "number" },
+          "title": { "type": "string" },
+          "description": { "type": "string" },
+          "category": { "type": "string" },
+          "price": { "type": "integer" },
+          "discountPercentage": { "type": "integer" },
+          "rating": { "type": "integer" },
+          "stock": { "type": "number" },
+          "tags": { "type": "array", "items": { "type": "string" } },
+          "brand": { "type": "string" },
+          "sku": { "type": "string" },
+          "weight": { "type": "integer" },
+          "dimensions": {
+            "type": "object",
+            "properties": {
+              "width": { "type": "integer" },
+              "height": { "type": "integer" },
+              "depth": { "type": "integer" }
+            }
+          },
+          "warrantyInformation": { "type": "string" },
+          "shippingInformation": { "type": "string" },
+          "availabilityStatus": { "type": "string" },
+          "reviews": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Review"
+            }
+          },
+          "returnPolicy": { "type": "string" },
+          "minimumOrderQuantity": { "type": "number" },
+          "meta": {
+            "type": "object",
+            "properties": {
+              "createdAt": { "type": "string" },
+              "updatedAt": { "type": "string" },
+              "barcode": { "type": "string" },
+              "qrCode": { "type": "string" }
+            }
+          },
+          "images": { "type": "array", "items": { "type": "string" } },
+          "thumbnail": { "type": "string" }
+        }
+      },
+      "Review": {
+        "type": "object",
+        "properties": {
+          "rating": { "type": "number" },
+          "comment": { "type": "string" },
+          "date": { "type": "string" },
+          "reviewerName": { "type": "string" },
+          "reviewerEmail": { "type": "string" }
+        }
+      },
+      "StockUpdate":{
+        "type":"object",
+        "properties":{
+          "productId":{"type":"number"},
+          "qty":{"type":"number"}
+        }
+      }
+    },
+    "responses": {
+      "500": {
+        "description": "Internal Server Error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": { "type": "string" },
+                "status": { "type": "number" }
+              }
+            }
+          }
+        }
+      },
+      "404": {
+        "description": "Resource not found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": { "type": "string" },
+                "status": { "type": "number" }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

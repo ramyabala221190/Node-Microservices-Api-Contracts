@@ -1,0 +1,35 @@
+name: Publish the repo as a github package
+
+on:
+ workflow_dispatch:
+
+jobs:
+  publish:
+     runs-on: ubuntu-latest
+
+     permissions:
+      contents: read
+      packages: write
+
+    
+     steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+          registry-url: https://npm.pkg.github.com/
+          scope: '@ramyabala221190/api-contracts'   # replace with your org/user scope
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build
+        run : npm run build
+
+      - name: Publish to GitHub Packages
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
