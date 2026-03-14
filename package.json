@@ -1,26 +1,32 @@
 {
   "name": "@ramyabala221190/api-contracts",
-  "version": "1.0.1",
+  "version": "1.0.13",
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/"
   },
   "description": "Open API descriptions and TS interfaces",
   "main": "index.js",
   "types": "index.d.ts",
-  "files": ["dist", "dist/openapi"],
+  "files": [
+    "dist",
+    "dist/openapi"
+  ],
   "exports": {
     ".": {
       "import": "./dist/index.js",
       "require": "./dist/index.js",
       "types": "./dist/index.d.ts"
+    },
+    "./openapi": {
+      "import": "./dist/openapi/index.js",
+      "require": "./dist/openapi/index.js",
+      "types": "./dist/openapi/index.d.ts"
     }
   },
   "scripts": {
-    "build":"tsc && cp -r src/openapi -r dist/openapi"
+    "build": "tsc",
+    "local-pack": "npm pack --pack-destination C:/Users/User/angular/node-microservices"
   },
   "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "mongoose": "^9.2.4"
-  }
+  "license": "ISC"
 }

@@ -1,4 +1,3 @@
-import mongoose from "mongoose"
 
 export interface ProductPayload {
     id:number,
@@ -22,7 +21,7 @@ export interface ProductPayload {
     shippingInformation: string,
     availabilityStatus: string,
     reviews: {
-        _id:mongoose.Types.ObjectId,
+        _id:string,
         rating: number,
         comment: string,
         date: Date,
@@ -42,7 +41,7 @@ export interface ProductPayload {
 }
 
 export interface ProductModel {
-    _id: mongoose.Types.ObjectId,
+    _id: string,
     id:number,
     title: string,
     description: string,
@@ -64,7 +63,7 @@ export interface ProductModel {
     shippingInformation: string,
     availabilityStatus: string,
     reviews: {
-        _id:mongoose.Types.ObjectId,
+        _id:string,
         rating: number,
         comment: string,
         date: Date,
@@ -86,7 +85,7 @@ export interface ProductModel {
 }
 
 export interface ReviewModel {
-    _id:mongoose.Types.ObjectId,
+    _id:string,
     rating: number,
     comment: string,
     date: Date,

@@ -1,0 +1,175 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "A minimal OpenAPI Description for UserMicroservice",
+    "version": "0.0.1"
+  },
+  "paths": {
+    "/myuser/user/{userName}": {
+      "get": {
+        "summary": "This API fetches details of a single user",
+        "tags": ["User Detail"],
+        "description": "This API describes a single user detail",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "userName",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Username of the user"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "oject",
+                  "properties": {
+                    "userDetail": {
+                      "$ref": "#/components/schemas/User"
+                    },
+                    "message": { "type": "string" }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
+        }
+      }
+    },
+    "/myuser/login": {
+      "post": {
+        "summary": "This API logs in the user",
+        "description": "API will accept username and password and log in the user",
+        "tags": ["Login"],
+        "requestBody": {
+          "description": "Request body to login a user",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                 "type":"object",
+                 "properties":{
+                    "username":{"type":"string"}
+                 }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "oject",
+                  "properties": {
+                    "userDetail": {
+                      "$ref": "#/components/schemas/User"
+                    },
+                    "message": { "type": "string" }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "_id": { "type": "string" },
+          "lastLoggedIn": { "type": "string" },
+          "loginAttempts": { "type": "array", "items": { "type": "string" } },
+          "id": "number",
+          "name": { "type": "string" },
+          "username": { "type": "string" },
+          "email": { "type": "string" },
+          "address": {
+            "$ref": "#/components/schemas/Address"
+          },
+          "phone": { "type": "string" },
+          "website": { "type": "string" },
+          "company": {
+            "$ref": "#/components/schemas/Company"
+          }
+        }
+      },
+      "Address": {
+        "type": "object",
+        "properties": {
+          "street": { "type": "string" },
+          "suite": { "type": "string" },
+          "city": { "type": "string" },
+          "zipcode": { "type": "string" },
+          "geo": {
+            "$ref": "#/components/schemas/Geo"
+          }
+        }
+      },
+      "Geo": {
+        "type": "object",
+        "properties": {
+          "lat": { "type": "string" },
+          "lng": { "type": "string" }
+        }
+      },
+      "Company": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "catchPhrase": { "type": "string" },
+          "bs": { "type": "string" }
+        }
+      }
+    },
+    "requestBodies": {},
+    "responses": {
+      "500": {
+        "description": "Internal Server Error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": { "type": "string" },
+                "status": { "type": "number" }
+              }
+            }
+          }
+        }
+      },
+      "404": {
+        "description": "Resource not found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": { "type": "string" },
+                "status": { "type": "number" }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,237 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "A minimal OpenAPI Description for OrderMicroservice",
+    "version": "0.0.1"
+  },
+  "paths": {
+    "/myorder/orders/{userName}": {
+      "get": {
+        "summary": "This API fetches order details of a single user",
+        "tags": ["Order Detail Retrieval"],
+        "description": "This API describes the order details of a single user",
+        "parameters": [
+          {
+            "in": "path",
+            "name": "userName",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Username of the user, whose order's are being fetched"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "oject",
+                  "properties": {
+                    "orderDetail": {
+                      "$ref": "#/components/schemas/Order"
+                    },
+                    "message": { "type": "string" }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
+        }
+      },
+      "post": {
+        "summary": "This API creates a new order for a user",
+        "tags": ["Order Creation"],
+        "description": "This API describes how to create new order for a user",
+        "requestBody": {
+          "description": "Request body to create new order",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "orderPayload": { "$ref": "#/components/requestBodies/Order" }
+                }
+              }
+            }
+          }
+        },
+        "parameters": [
+          {
+            "in": "path",
+            "name": "userName",
+            "schema": {
+              "type": "string"
+            },
+            "required": true,
+            "description": "Username of the user, whose order is being created"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "oject",
+                  "properties": {
+                    "message": { "type": "string" }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
+        }
+      }
+    },
+    "/myorder/order/status": {
+      "put": {
+        "summary": "This API updates order status",
+        "description": "API will update status of order of a user",
+        "tags": ["Update Order Status"],
+        "requestBody": {
+          "description": "Request body to login a user",
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "detail": { "$ref":"#/components/requestBodies/StatusUpdate" }
+                }
+              }
+            }
+          }
+        },
+       "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "oject",
+                  "properties": {
+                    "message": { "type": "string" }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "$ref": "#/components/responses/500"
+          },
+          "404": {
+            "$ref": "#/components/responses/404"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Order": {
+        "type": "object",
+        "properties": {
+          "_id": { "type": "string" },
+          "cartId": { "type": "string" },
+          "user": { "type": "string" },
+          "status": { "type": "string" },
+          "totalCost": { "type": "number" },
+          "products": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Product"
+            }
+          }
+        }
+      },
+      "Product": {
+        "type": "object",
+        "properties": {
+          "product": {
+            "$ref": "../product/openapi.json#/components/schemas/Product"
+          },
+          "qty": { "type": "number" },
+          "price": { "type": "number" }
+        }
+      }
+    },
+    "requestBodies": {
+      "Order": {
+        "type": "object",
+        "properties": {
+          "cartId": { "type": "string" },
+          "user": { "type": "string" },
+          "status": { "type": "string" },
+          "totalCost": { "type": "number" },
+          "products": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/Product"
+            }
+          }
+        }
+      },
+      "StatusUpdate":{
+        "type":"object",
+        "properties":{
+          "orderId":{"type":"string"},
+          "productList":{
+            "type":"array",
+            "items":{
+              "type":"object",
+              "properties":{
+                "productId":{"type":"number"},
+                "qty":{"type":"number"}
+              }
+            }
+          }  
+        }
+      }
+    },
+    "responses": {
+      "500": {
+        "description": "Internal Server Error",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": { "type": "string" },
+                "status": { "type": "number" }
+              }
+            }
+          }
+        }
+      },
+      "404": {
+        "description": "Resource not found",
+        "content": {
+          "application/json": {
+            "schema": {
+              "type": "object",
+              "properties": {
+                "message": { "type": "string" },
+                "status": { "type": "number" }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
